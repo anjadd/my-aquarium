@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Aquarium</string>
+    <string name="number_of_aquariums">Number of aquariums</string>
+    <string name="number_of_fish_in_aquarium">Number of fish in aquarium</string>
+</resources>
