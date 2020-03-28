@@ -19,17 +19,17 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-/*        someKotlinExamples()
+        /** Uncomment the functions you want to test*/
+
+        /*
+        someKotlinExamples()
 
         addFishInAquariums()
 
         someOtherExamples()
 
-        maxOf(10, 3)
-
-        findMaxOf(4, 25)*/
-
         collectionExamples()
+        */
 
         varargsExamples()
 
@@ -152,17 +152,22 @@ class MainActivity : AppCompatActivity() {
         println("You have ordered $numberOfCoffees coffees!")
         //This will print out: You have ordered 5 coffees!
 
-    }
-
-    private fun findMaxOf(a: Int, b: Int): Int {
-        return if (a > b) {
-            a
-        } else {
-            b
+        fun findMaxOf(a: Int, b: Int): Int {
+            return if (a > b) {
+                a
+            } else {
+                b
+            }
         }
-    }
 
-    private fun maxOf(a: Int, b: Int) = if (a > b) a else b
+        findMaxOf(4, 25)
+
+        fun maxOf(a: Int, b: Int) = if (a > b) a else b
+
+        maxOf(10, 3)
+
+
+    }
 
     private fun collectionExamples() {
 
@@ -242,7 +247,7 @@ class MainActivity : AppCompatActivity() {
     private fun varargsExamples() {
 
         /**
-         * Function that takes n number as inputs and returns the average of all the inputs.
+         * Function that takes n number of integers as inputs and returns the average of all the inputs.
          * You can accomplish this by defining a parameter as a vararg.
          * */
         fun getAverage(vararg inputNumbers: Int): Float {
@@ -261,10 +266,12 @@ class MainActivity : AppCompatActivity() {
         val result3 = getAverage(*inputsForGetAverage1)
         println("Average of 7, 8, 9 = $result3")
 
+
         /**
-         * Function that takes n number as inputs and returns the average of all the inputs.
+         * The same avg function but the vararg parameter is replaced with a list
+         * Function that takes n number of integers as inputs and returns the average of all the inputs.
          * If the size of n variables is not fixed, you usually convert it into an array
-         * or list and pass it to function.
+         * or list and pass it to the function.
          * */
         fun getAverage2(numbersList: List<Int>): Float {
             var sum = 0.0f
@@ -276,5 +283,91 @@ class MainActivity : AppCompatActivity() {
         val result4 = getAverage2(inputsForGetAverage2)
         println("Average of 4, 5, 6 = $result4")
 
+        fun getAverageAndPrint(message: String, vararg numbers: Int) {
+            var sum = 0.0f
+            numbers.forEach { number ->
+                sum += number
+            }
+            val avgResult = sum / numbers.size
+            println("$message $avgResult")
+        }
+
+        getAverageAndPrint("You can even define the numbers here, Average of 3, 4, 5 =", 3, 4, 5)
+        getAverageAndPrint("Only one param, you don't need to send the numbers")
+
+
+        fun getAverageAndPrint2(message: String, numbers: List<Int>) {
+            var sum = 0.0f
+            numbers.forEach { number ->
+                sum += number
+            }
+            val avgResult = sum / numbers.size
+            println("$message $avgResult")
+        }
+
+        getAverageAndPrint2("Average of 3, 4, 5 =", arrayListOf(3, 4, 5))
+
+
+        fun getPopularHobbies(message: String, vararg hobbies: String) {
+            println(message)
+            hobbies.forEach { hobby -> println(hobby) }
+        }
+
+        val popularHobbies = arrayOf("Swimming", "Reading", "Yoga", "Biking", "Programming")
+
+        // This throws an error, because required type is String, but instead an Array<String> is found
+        // getPopularHobbies("The most popular hobbies are: ", popularHobbies)   ERROR
+
+        /**
+         * You will need to pass the popular hobbies array of values in the vararg
+         * parameter using the spread (*) operator
+         * */
+        getPopularHobbies("The most popular hobbies are: ", *popularHobbies)
+
+        /**
+         * Named arguments is a powerful feature in Kotlin, which allows you to specify the
+         * names of arguments that you're passing to the function.
+         * You can even mix up the order of the function parameters.
+         * How to define a named argument: parameter_name = parameter_value. Use this when calling
+         * the desired function.*/
+        fun completingLotroQuest(user: String, lotroCharacter: String, quest: String) {
+            println("Dear $user, your character $lotroCharacter has completed the quest $quest!")
+        }
+
+        completingLotroQuest(
+            user = "Lexa_mk",
+            lotroCharacter = "Belexael",
+            quest = "Wandering Elfs"
+        )
+        completingLotroQuest(
+            quest = "Collecting Spring flowers",
+            user = "Lexa_mk",
+            lotroCharacter = "Belexa"
+        )
+
+        /**
+        This will throw an error: Mixing named and positioned arguments is not allowed
+        if you use named argument syntax for one argument, all the argument that follow also
+        have to be named. The 2nd parameter has to be named also. */
+        //completingLotroQuest(user = "Lexa_mk", "Belexael", quest = "Wandering Elfs")
+
+        completingLotroQuest("Lexa_mk", "Belexael", quest = "Wandering Elfs")
+
+        /**
+         * Kotlin supports default arguments in function declarations. You can specify a
+         * default value for a function parameter. So if no value for a parameter is specified,
+         * use the default value. If all the arguments in the function have defaults,
+         * you could call the function without passing any arguments in.
+         * How to define a default parameter value: parameter_name: parameter_type = default_parameter_value
+         */
+        fun completingLotroQuest2(
+            user: String = "Guest", lotroCharacter: String = "main character",
+            quest: String = "Introduction"
+        ) {
+            println("Dear $user, your character $lotroCharacter has completed the quest $quest!")
+        }
+
+        completingLotroQuest2(lotroCharacter = "Arwen")
+        completingLotroQuest2()
     }
 }
