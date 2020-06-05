@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,9 +30,13 @@ class MainActivity : AppCompatActivity() {
         someOtherExamples()
 
         collectionExamples()
-        */
 
         varargsExamples()
+
+        */
+
+        collectionExamples()
+        classExamples()
 
     }
 
@@ -86,6 +91,24 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, food.toString(), Toast.LENGTH_LONG).show()
         Toast.makeText(this, name, Toast.LENGTH_LONG).show()
 
+        //Ranges using the in and .. syntax
+        for (charItem in 'a'..'g') {
+            println("Char $charItem")
+        }
+
+        for (numItem in 1..5) {
+            println(numItem)
+        }
+
+        // Range going downwards, using the “in” and “downTo” syntax
+        for (numItem in 5 downTo 1) {
+            println(numItem)
+        }
+
+        //Range advancing in multiple steps (ex. print all even numbers in a range from 2 to 10
+        for (evenNum in 2..10 step 2) {
+            println("Even number: $evenNum")
+        }
     }
 
     private fun addFishInAquariums() {
@@ -148,6 +171,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        var welcomeMessage = "Hello and welcome to Kotlin"
+        when (welcomeMessage.length) {
+            0 -> println("Nothing to say?")
+            in 1..50 -> println("Perfect")
+            else -> println("Too long!")
+        }
+
         val numberOfCoffees = 5
         println("You have ordered $numberOfCoffees coffees!")
         //This will print out: You have ordered 5 coffees!
@@ -171,26 +201,43 @@ class MainActivity : AppCompatActivity() {
 
     private fun collectionExamples() {
 
-        val fruits1 = listOf("apple", "banana", "kiwi", "cherry", "orange")
-        for (fruit in fruits1) {
+        val fruits = listOf("apple", "banana", "kiwi", "cherry", "orange")
+        for (fruit in fruits) {
             println(fruit)
         }
 
-        val fruits = mutableListOf("apple", "banana", "kiwi", "cherry", "orange")
-        fruits.add("lemon")
+        if (fruits.contains("cherry")) {
+            println("The fruits contain cherry")
+        }
+        println("The first element in fruits is ${fruits.first()} and the last is ${fruits.last()}")
 
-        /*val fruits: MutableList<String> = mutableListOf("apple", "banana", "kiwi", "cherry", "orange")
-        fruits.add("lemon")*/
+        //Finding the index of an element in an array
+        println("The index of kiwi is: ${fruits.indexOf("kiwi")}")
+
+        println("Number of elements is list fruits is: ${fruits.count()}")
+
+
+        val fruits1 = mutableListOf("apple", "banana", "kiwi", "cherry", "orange")
+        fruits1.add("lemon")
+
+        /*val fruits1: MutableList<String> = mutableListOf("apple", "banana", "kiwi", "cherry", "orange")
+        fruits1.add("lemon")*/
 
         //Or using the list item indexes in the for loop
         for (fruitIndex in fruits.indices) {
             println("Fruit at index $fruitIndex is: ${fruits[fruitIndex]}")
         }
 
+        //This is the same as iterating using the indices
         val fruits2 = listOf("apple", "banana", "kiwi", "cherry", "orange")
+        for ((index, value) in fruits2.withIndex()) {
+            println("The fruit at index $index is: $value")
+        }
+
+        val fruits3 = listOf("apple", "banana", "kiwi", "cherry", "orange")
         var index = 0
-        while (index < fruits2.size) {
-            println("Fruit at index $index is: ${fruits2[index]}")
+        while (index < fruits3.size) {
+            println("Fruit at index $index is: ${fruits3[index]}")
             index++
         }
 
@@ -224,6 +271,15 @@ class MainActivity : AppCompatActivity() {
             println(thing)
         }
 
+        /**
+         * The next line says create an array with 5 elements, and at the current index
+         * put a value that's 3 times the index and do this for all the elements
+         * Output: 0 3 6 9 12*/
+        val someNumbers = Array(5) { i -> i * 3 }
+        println("Array Some Numbers: ======= ")
+        //it is item
+        someNumbers.forEach { println(it) }
+
         val mapOfInterestingThings =
             mapOf(1 to "Reading", 2 to "Yoga", 3 to "Biking", 4 to "Programming")
         mapOfInterestingThings.forEach { (key, value)
@@ -237,6 +293,77 @@ class MainActivity : AppCompatActivity() {
         mapOfInterestingThings2[5] = "Swimming"
 
         val someArray = mutableSetOf(1 to "a", 1 to "b")
+
+
+        fun fishTypesThatILike() {
+
+            val trout: String = "trout"
+            val haddock: String = "haddock"
+            val snapper: String = "snappergrergerheefwf"
+
+            println("I will eat the $haddock, but won't eat the $trout and $snapper")
+
+            val fishList = listOf(trout, haddock, snapper)
+            for (fishName in fishList) {
+                when (fishName.length) {
+                    0 -> println("Fish name can't be 0")
+                    in 3..12 -> println("The $fishName is good fish name")
+                    else -> println("The $fishName is OK fish name")
+                }
+            }
+
+            val numbers: IntArray = intArrayOf(1, 2, 3)
+            val floats: FloatArray = floatArrayOf(2.5f, 3.44f, 5.7832f)
+            val chars: CharArray = charArrayOf('a', 'A', 'b')
+
+            val mixedArray = arrayOf("fish", 2, 5.5f)
+
+            //Option 1 for printing the contents of mixed array
+            for (temp in mixedArray) {
+                println(temp)
+            }
+
+            //Option 2 for printing the contents of mixed array, result is: [fish, 2, 5.5]
+            println(mixedArray.contentToString())
+
+            for (temp in numbers) {
+                println(temp)
+            }
+
+            for (temp in floats) {
+                println(temp)
+            }
+
+            for (temp in chars) {
+                println(temp)
+            }
+        }
+
+        fishTypesThatILike()
+
+        /**
+         * This function iterates through both arrays simultaneously
+         */
+        fun printBytesAndSizes() {
+            val butesArray = Array(7) { 1000.0.pow(it) }
+            val sizes = arrayOf(
+                "byte", "kilobyte", "megabyte", "gigabyte",
+                "terabyte", "petabyte", "exabyte"
+            )
+            for ((i, value) in butesArray.withIndex()) {
+                println("1 ${sizes[i]} = ${value.toLong()} bytes")
+            }
+            /***
+             * Output:
+            1 byte = 1 bytes
+            1 kilobyte = 1000 bytes
+            1 megabyte = 1000000 bytes
+            1 gigabyte = 1000000000 bytes
+            1 terabyte = 1000000000000 bytes
+            1 petabyte = 1000000000000000 bytes
+            1 exabyte = 1000000000000000000 bytes
+             */
+        }
 
         val someList = listOf(null, null)
 //        val someOtherList = [null, null]
@@ -369,5 +496,73 @@ class MainActivity : AppCompatActivity() {
 
         completingLotroQuest2(lotroCharacter = "Arwen")
         completingLotroQuest2()
+    }
+
+    private fun classExamples() {
+
+        val person1 = Person(firstName = "Dean", lastName = "Winchester")
+        println("Name P1: ${person1.firstName} ${person1.lastName}")
+
+        val person2 = Person()
+        println("Name P2: ${person2.firstName} ${person2.lastName}")
+
+        val person3 = Person()
+        person3.nickname = "Shades"
+        println("Name P3: ${person3.firstName} ${person3.lastName}, nickname: ${person3.nickname}")
+
+        val person4 = Person()
+        person4.nickname = "Shades"
+        person4.printPersonInfo()
+
+        // If/else check
+        val nickname: String? = "Luv"
+        val nicknameToPrint: String = if (nickname != null) nickname else ""
+
+        //Replacing the if/else check with Elvis operator check ?:
+        val nicknameToPrintElvis: String = nickname ?: ""
+
+        val person5 = Person()
+        person5.age = 20
+        person5.nickname = null
+        println("Details for P5:")
+        person5.printPersonInfo()
+
+        //Instantiating the BasicInfoProvider interface
+        val provider = BasicInfoProvider()
+        provider.printInfo(person5)
+        provider.getSessionId()
+
+        fun checkTypes(infoProvider: PersonInfoProvider) {
+            if (infoProvider is SessionInfoProvider) {
+                println("Info provider is of type Session Info Provider")
+            } else {
+                println("Info provider is not of type Session Info Provider")
+            }
+        }
+
+        checkTypes(provider)
+
+        fun checkDataTypes() {
+            val echo: Person = Person()
+            if (echo is Person) {
+                println("Variable echo is of type Person")
+            } else if (echo !is Person) {
+                println("Variable echo is not of type Person")
+            } else {
+                println("Variable echo is of an unknown type")
+            }
+        }
+
+        checkDataTypes()
+
+        fun castDataTypes() {
+            val avgPoints = 24.8
+            val points = avgPoints.toInt()
+            println("Points: $points")
+        }
+
+        castDataTypes()
+
+
     }
 }
