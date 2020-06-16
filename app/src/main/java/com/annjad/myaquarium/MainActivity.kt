@@ -92,23 +92,44 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, name, Toast.LENGTH_LONG).show()
 
         //Ranges using the in and .. syntax
+        // iterating in the char range from a to g
         for (charItem in 'a'..'g') {
-            println("Char $charItem")
+            println("Char $charItem")   //Output: a b c d e f g
         }
 
+        // iterating in the range 1 to 5
         for (numItem in 1..5) {
-            println(numItem)
+            println(numItem)    //Output: 1 2 3 4 5
         }
 
-        // Range going downwards, using the “in” and “downTo” syntax
+        // iterating backwards, in the range 5 to 1, using the “in” and “downTo” syntax
         for (numItem in 5 downTo 1) {
-            println(numItem)
+            println(numItem)    //Output: 5 4 3 2 1
         }
 
         //Range advancing in multiple steps (ex. print all even numbers in a range from 2 to 10
         for (evenNum in 2..10 step 2) {
-            println("Even number: $evenNum")
+            println("Even number: $evenNum")    //Output: 2 4 6 8 10
         }
+
+        /**Use a for loop to create (a list of) the numbers between 0 and 100 that are divisible by 7*/
+        fun numbersFrom0To100DivisibleBy7() {
+            var divisibleNumbers = mutableListOf<Int>()
+            for (el in 0..100) {
+                if (el % 7 == 0) {
+                    divisibleNumbers.add(el)
+                }
+            }
+            println("========== Numbers 0-100, divisible by 7 ==========")
+            print(divisibleNumbers)
+
+            var divisibleNumbersOption2 = mutableListOf<Int>()
+            for (el in 0..100 step 7) {
+                divisibleNumbersOption2.add(el)
+            }
+            print(divisibleNumbersOption2)
+        }
+        numbersFrom0To100DivisibleBy7()
     }
 
     private fun addFishInAquariums() {
@@ -259,6 +280,13 @@ class MainActivity : AppCompatActivity() {
             println(thing)
         }
 
+        // Foreach loop, where it is the default name for each element in the array
+        // that is passed into this lambda function
+        interestingThings2.forEach { it -> println(it) }
+
+        // Even more simplified from the code above
+        interestingThings2.forEach { println(it) }
+
         interestingThings2.forEachIndexed { index, thing ->
             println("Thing at position $index is $thing")
         }
@@ -277,7 +305,7 @@ class MainActivity : AppCompatActivity() {
          * Output: 0 3 6 9 12*/
         val someNumbers = Array(5) { i -> i * 3 }
         println("Array Some Numbers: ======= ")
-        //it is item
+        //it is the default name for each element in the array that is passed
         someNumbers.forEach { println(it) }
 
         val mapOfInterestingThings =
@@ -294,9 +322,7 @@ class MainActivity : AppCompatActivity() {
 
         val someArray = mutableSetOf(1 to "a", 1 to "b")
 
-
         fun fishTypesThatILike() {
-
             val trout: String = "trout"
             val haddock: String = "haddock"
             val snapper: String = "snappergrergerheefwf"
@@ -330,40 +356,93 @@ class MainActivity : AppCompatActivity() {
                 println(temp)
             }
 
-            for (temp in floats) {
-                println(temp)
+            floats.forEach {
+                println(it)
             }
 
             for (temp in chars) {
                 println(temp)
             }
+
+            fun addNumbersToListWithStrings() {
+                /**
+                 * Create an integer array of numbers, from 11 to 15.
+                Create an empty mutable list for Strings.
+                Write a for loop that loops over the array and adds the string representation
+                of each number to the list.*/
+                val myNumbers = Array(5) { i -> i + 11 }
+                println("========== My Numbers ==========")
+                myNumbers.forEach { println(it) }
+
+                val myNumbersOption2 = arrayListOf<Int>()
+                for (numb in 11..15) {
+                    myNumbersOption2.add(numb)
+                }
+                println("========== My Numbers Option 2 ==========")
+                myNumbers.forEach { println(it) }
+
+                var myStrings = mutableListOf<String>()
+                myNumbers.forEach { myStrings.add(it.toString()) }
+                println("========== My Strings ==========")
+                myStrings.forEach { println(it) }
+
+            }
+            addNumbersToListWithStrings()
+
         }
 
         fishTypesThatILike()
 
+        fun favoriteFruits() {
+            val allFruits = listOf("cherry", "strawberry", "watermelon")
+            val likeliness =
+                listOf("most favorite", "second most favorite", "third most favorite")
+
+            for ((i, value) in allFruits.withIndex()) {
+                println("My ${likeliness[i]} fruit is: $value")
+            }
+
+            /** Output:
+             * My most favorite fruit is: cherry
+             * My second most favorite fruit is: strawberry
+             * My third most favorite fruit is: watermelon */
+        }
+
+        favoriteFruits()
+
         /**
-         * This function iterates through both arrays simultaneously
+         * This function converts larger byte sizes (KB,MB,GB, etc.) into bytes and iterates through both arrays simultaneously
+         * [0] 1B = 1B
+         * [1] 1 KB = 1024 B = 1024^1
+         * [2] 1 MB = 1024 * 1024 B = 1024^2 (1024 na stepen 2, kolku sto e momentalniot indeks na el)
+         * [3] 1 GB = 1024 * 1024 * 1024 B = 1024^3
+         * [4] 1 TB = 1024 * 1024 * 1024 * 1024 B = 1024^4
+         * [5] 1 PB = 1024 * 1024 * 1024 * 1024 * 1024 B = 1024^5
+         * [6] 1 EB = 1024 * 1024 * 1024 * 1024 * 1024 * 1024 B = 1024^6
          */
-        fun printBytesAndSizes() {
-            val butesArray = Array(7) { 1000.0.pow(it) }
+        fun convertDiferentByteSizes() {
+            val bytesArray = Array(7) { 1024.0.pow(it) }
             val sizes = arrayOf(
                 "byte", "kilobyte", "megabyte", "gigabyte",
                 "terabyte", "petabyte", "exabyte"
             )
-            for ((i, value) in butesArray.withIndex()) {
-                println("1 ${sizes[i]} = ${value.toLong()} bytes")
+
+            for ((myIndex, value) in bytesArray.withIndex()) {
+                println("1 ${sizes[myIndex]} = ${value.toLong()} bytes")
             }
+
             /***
              * Output:
             1 byte = 1 bytes
-            1 kilobyte = 1000 bytes
-            1 megabyte = 1000000 bytes
-            1 gigabyte = 1000000000 bytes
-            1 terabyte = 1000000000000 bytes
-            1 petabyte = 1000000000000000 bytes
-            1 exabyte = 1000000000000000000 bytes
+            1 kilobyte = 1024 bytes
+            1 megabyte = 1048576 bytes
+            1 gigabyte = 1073741824 bytes
+            1 terabyte = 1099511627776 bytes
+            1 petabyte = 1125899906842624 bytes
+            1 exabyte = 1152921504606846976 bytes
              */
         }
+        convertDiferentByteSizes()
 
         val someList = listOf(null, null)
 //        val someOtherList = [null, null]
@@ -531,16 +610,6 @@ class MainActivity : AppCompatActivity() {
         val provider = BasicInfoProvider()
         provider.printInfo(person5)
         provider.getSessionId()
-
-        fun checkTypes(infoProvider: PersonInfoProvider) {
-            if (infoProvider is SessionInfoProvider) {
-                println("Info provider is of type Session Info Provider")
-            } else {
-                println("Info provider is not of type Session Info Provider")
-            }
-        }
-
-        checkTypes(provider)
 
         fun checkDataTypes() {
             val echo: Person = Person()
