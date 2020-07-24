@@ -104,26 +104,26 @@ fun main() {
 
     println("========================================================")
 
-    val fruits = listOf("apple", "banana", "kiwi", "cherry", "apricot", "orange")
-    printFruits(fruits) { it.startsWith("A", true) }
+    val fruitsList = listOf("apple", "banana", "kiwi", "cherry", "apricot", "orange")
+    printFruits(fruitsList) { it.startsWith("A", true) }
 
-    printFruitsWithNullableType(fruits, null)
+    printFruitsWithNullableType(fruitsList, null)
 
     /** Pass a function as a parameter declared as a variable*/
-    printFruits2(fruits, myPattern)
+    printFruits2(fruitsList, myPattern)
 
-    printFruits(fruits, getFilterPattern())
+    printFruits(fruitsList, getFilterPattern())
 
-    printFruits(fruits, getMyFilterPattern())
+    printFruits(fruitsList, getMyFilterPattern())
 
     println("========================================================")
 
-    /**You can chain multiple functions to create a high order one*/
+    /**You can chain multiple functions to create a high order function */
     /**Use filterNotNull() to only filter through the not null elements */
-    val fruits2 =
+    val fruits =
         listOf("apple", "banana", "kiwi", "cherry", "apricot", "orange", "blueberry", null, null)
     println("Fruits starting with 'A':")
-    fruits2
+    fruits
         .filterNotNull()
         .filter { it.startsWith("a") }
         .forEach { println(it) }
@@ -135,7 +135,7 @@ fun main() {
      * With map() the Strings are converted to Ints, and the forEach() is looping through Ints as well
      */
     println("Fruits length ending with 'Y':")
-    fruits2
+    fruits
         .filterNotNull()
         .filter { it.endsWith("y") }
         .map { it.length }
@@ -143,14 +143,14 @@ fun main() {
 
     /** take() is used when you want to take only a certain number of elements from a list.*/
     println("First 3 elements from fruits are:")
-    fruits2
+    fruits
         .filterNotNull()
         .take(3)
         .forEach { println(it) }
 
     /** takeLast() is used when you want to take only a certain number of elements from the end of a list.*/
     println("Last 3 elements from fruits are:")
-    fruits2
+    fruits
         .filterNotNull()
         .takeLast(3)
         .forEach { println(it) }
@@ -161,7 +161,7 @@ fun main() {
      * associate(element to element.some_property), like: fruits.associate { it to it.length },
      * where the result is a map in which the key is the name of the fruit, and the value is
      * the fruit’s length.*/
-    fruits2
+    fruits
         .filterNotNull()
         .associate { it to it.length }
         .forEach { println("Fruit: ${it.key}, word length: ${it.value}") }
@@ -172,7 +172,7 @@ fun main() {
      * associateWith(element.some_property), like: fruits.associateWith { it.length },
      * where the result is a map in which the key is the name of the fruit, and the value is
      * the fruit’s length.*/
-    fruits2
+    fruits
         .filterNotNull()
         .associateWith { it.length }
         .forEach { println("Fruit: ${it.key}, word length: ${it.value}") }
@@ -182,7 +182,7 @@ fun main() {
      * as the key (fruit name) and Integer as the value (fruit’s name length) using the
      * associateWith() function and assign it to a variable instead of using the
      * forEach() for iterating*/
-    val mapOfFruits = fruits2
+    val mapOfFruits = fruits
         .filterNotNull()
         .associateWith { it.length }
 
@@ -190,9 +190,9 @@ fun main() {
 
     /**Use the function first() to get the first element from a list and
      * last() to get the last element from a list*/
-    val firstFruit = fruits2.filterNotNull().first()
-    val lastFruit = fruits2.last()
-    val lastNotNullFruit = fruits2.filterNotNull().last()
+    val firstFruit = fruits.filterNotNull().first()
+    val lastFruit = fruits.last()
+    val lastNotNullFruit = fruits.filterNotNull().last()
 
     println("First fruit: $firstFruit, last fruit: $lastFruit, last not null fruit: $lastNotNullFruit")
 
@@ -201,10 +201,10 @@ fun main() {
      * by using a lambda expression. The findLast() function is used to find only the last list
      * element that matches some pattern, by using a lambda expression.
      * To find all elements that match the search criteria, use the filter function()*/
-    val firstFruitStartingWithA = fruits2.filterNotNull().find { it.startsWith("a") }
+    val firstFruitStartingWithA = fruits.filterNotNull().find { it.startsWith("a") }
     println("First fruit starting with A: $firstFruitStartingWithA")
 
-    val lastFruitStartingWithA = fruits2.filterNotNull().findLast { it.startsWith("a") }
+    val lastFruitStartingWithA = fruits.filterNotNull().findLast { it.startsWith("a") }
     println("Last fruit starting with A: $lastFruitStartingWithA")
 
 
@@ -212,10 +212,10 @@ fun main() {
      * be null (output: First fruit starting with Rasp: null). So if you want to avoid printing
      * null in the console, and replacing it with an empty String, use the orEmpty() function
      * at the end of your find() search.*/
-    val fruitStartingWithRasp = fruits2.filterNotNull().find { it.startsWith("rasp") }
+    val fruitStartingWithRasp = fruits.filterNotNull().find { it.startsWith("rasp") }
     println("First fruit starting with Rasp: $fruitStartingWithRasp")
 
-    val fruitStartingWithRaspOrEmpty = fruits2.filterNotNull()
+    val fruitStartingWithRaspOrEmpty = fruits.filterNotNull()
         .find { it.startsWith("rasp") }.orEmpty()
     println("First fruit starting with Rasp without showing a null value: $fruitStartingWithRaspOrEmpty")
 
