@@ -20,12 +20,21 @@ class Person(val firstName: String = "Peter", val lastName: String = "Parker") {
             return field
         }*/
 
+    /**You can add a secondary constructor, but in Kotlin you typically don’t need a second one.
+     * A good structured class will only have one constructor with default parameters for the
+     * optional values. But if you decide to declare a secondary constructor, it must contain a
+     * call to the primary one by using “this” and you have to pass any required arguments*/
+    constructor() : this("Lara", "Croft") {}
+
     fun printPersonInfo() {
         val nicknameToPrint: String = nickname ?: ""
         val ageToPrint = age?.toString() ?: "unknown"
         println("Person details: $firstName $nicknameToPrint $lastName, age: $ageToPrint")
     }
 }
+
+/**You can replace a second constructor with a helper method like the one below*/
+fun makeDefaultPerson() = Person("Lara", "Croft")
 
 class Person2 {
     val firstName = "Clarke"
