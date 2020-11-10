@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.aquarium
 
 //Kotlin will not create a property for volumeNeeded from the argument in the constructor,
 // because it doesn't have a val or var

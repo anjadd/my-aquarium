@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 /**Create a new class, Spice.
 Pass in a mandatory String argument for the name, and a String argument for the level of spiciness where the default value is mild for not spicy.

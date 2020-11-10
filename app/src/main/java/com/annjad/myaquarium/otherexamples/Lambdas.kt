@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 import java.lang.Math.random
 import kotlin.random.Random

@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.aquarium
 
 fun main(args: Array<String>) {
     for (i in 1..10)

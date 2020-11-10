@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 /** Create class, SimpleSpice. Let the class be a property with a String for the name of
  * the spice, and a String for the level of spiciness. Set the name to curry and the

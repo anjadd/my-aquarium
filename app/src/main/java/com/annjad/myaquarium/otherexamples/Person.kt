@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 class Person(val firstName: String = "Peter", val lastName: String = "Parker") {
 

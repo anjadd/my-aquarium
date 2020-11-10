@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.aquarium
 
 abstract class AquariumFish {
     abstract val color: String

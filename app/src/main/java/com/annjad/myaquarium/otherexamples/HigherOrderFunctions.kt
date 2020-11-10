@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 /**
  * Higher order functions are functions that either return another function or

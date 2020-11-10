@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 /**Make Spice an abstract class (I'll call it SpiceAbstract), and then create some subclasses that are actual spices.
 
@@ -81,6 +81,13 @@ class Salt(name: String, spiciness: String = "mild", spiceColor: SpiceColor = Wh
     }
 }
 
+/**Create a simple data class, SpiceContainer, that holds one spice.
+Give SpiceContainer a property, label, that is derived from the name of the spice.
+Create some containers with spices and print out their labels.*/
+data class SpiceContainer(var spice: SpiceAbstract) {
+    val label: String = spice.name
+}
+
 fun getLowAndMediumSpicinessSpices2(listOfSpices: MutableList<SpiceAbstract>): List<SpiceAbstract> {
     return listOfSpices.filter { it.spicinessLevel < 5 }
 }
@@ -100,4 +107,19 @@ fun main() {
         println("${it.name} (${it.spicinessLevel})")
     }
 
+    val spice1 = SpiceContainer(curry)
+    println(spice1.label)
+    val spice2 = SpiceContainer(salt)
+    println(spice2.label)
+
+    //Alternative way of creating a spices list and printing their names:
+    val mySpicesList = listOf(
+        SpiceContainer(Curry("Yellow Curry", "mild")),
+        SpiceContainer(Curry("Red Curry", "medium")),
+        SpiceContainer(Curry("Green Curry", "spicy"))
+    )
+
+    for (mySpice in mySpicesList) {
+        println(mySpice.label)
+    }
 }

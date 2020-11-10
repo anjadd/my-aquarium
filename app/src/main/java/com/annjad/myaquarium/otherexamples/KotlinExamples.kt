@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 import java.time.DayOfWeek
 import java.time.LocalDate

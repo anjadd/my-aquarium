@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 class FancyInfoProvider : BasicInfoProvider() {
     override val providerInfo: String

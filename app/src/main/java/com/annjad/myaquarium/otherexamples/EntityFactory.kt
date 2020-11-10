@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 import java.util.*
 
@@ -182,7 +182,7 @@ fun main() {
      */
 
     //The reference to Companion/Factory is redundant
-    val entity = Entity.Factory.create()
+    val entity = Entity.create()
 
     //Reference the property within the companion object as if it was a static property
     Entity.id

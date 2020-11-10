@@ -1,4 +1,4 @@
-package com.annjad.myaquarium
+package com.annjad.myaquarium.otherexamples
 
 /**
  * This is just my exercise test for the interface and classes, it's the same as PersonInfoProvider*/
