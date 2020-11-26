@@ -24,9 +24,15 @@ fun main(args: Array<String>) {
     /**Create a main() function that takes an argument representing the time in 24-hour format
      * (values between and including 0 -> 23). In the main() function, check if the
      * time is before midday (<12), then print "Good morning, Kotlin"; otherwise, print "Good night, Kotlin".*/
-    println("Good ${if (args[0].toInt() < 12) "morning" else "night"}, Kotlin!")
-    //Or you can do the check in a function outside of main
-    greetingBasedOnTime(args[0])
+    if(!args.isNullOrEmpty()){
+        println("Good ${if (args[0].toInt() < 12) "morning" else "night"}, Kotlin!")
+        //Or you can do the check in a function outside of main
+        greetingBasedOnTime(args[0])
+    }
+    else{
+        greetingBasedOnTime("14")
+    }
+
 
 
     /**
@@ -55,13 +61,15 @@ fun main(args: Array<String>) {
     println(whatShouldIDoToday("sad"))
     println(whatShouldIDoToday("happy", "Sunny", 32))
     println(whatShouldIDoToday("moody"))
-    println(whatShouldIDoToday("sleepy"))*/
+    println(whatShouldIDoToday("sleepy"))
 
 //    repeat(5) { println(whatShouldIDoToday()) }
 
     filterSpices()
 
-    filterSpicesShorter()
+    filterSpicesShorter()*/
+
+    labeledBreakExample()
 }
 
 /** Create a function, dayOfWeek() and print the current day of the week.*/
@@ -96,16 +104,20 @@ fun dayOfWeek(): String {
 
 /** Create a function, dayOfWeek() and print the current day of the week.*/
 fun dayOfWeekWithJavaTimeLibrary(): String {
-    return when
-        (LocalDate.now().dayOfWeek) {
-        DayOfWeek.MONDAY -> "Monday"
-        DayOfWeek.TUESDAY -> "Tuesday"
-        DayOfWeek.WEDNESDAY -> "Wednesday"
-        DayOfWeek.THURSDAY -> "Thursday"
-        DayOfWeek.FRIDAY -> "Friday"
-        DayOfWeek.SATURDAY -> "Saturday"
-        DayOfWeek.SUNDAY -> "Sunday"
-        else -> "Error"
+    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        when
+                (LocalDate.now().dayOfWeek) {
+            DayOfWeek.MONDAY -> "Monday"
+            DayOfWeek.TUESDAY -> "Tuesday"
+            DayOfWeek.WEDNESDAY -> "Wednesday"
+            DayOfWeek.THURSDAY -> "Thursday"
+            DayOfWeek.FRIDAY -> "Friday"
+            DayOfWeek.SATURDAY -> "Saturday"
+            DayOfWeek.SUNDAY -> "Sunday"
+            else -> "Error"
+        }
+    } else {
+        TODO("VERSION.SDK_INT < O")
     }
 }
 
@@ -257,5 +269,28 @@ fun printNumberN() {
         1, 2, 3 -> println("n is a positive integer less than 4.")
         0 -> println("n is zero")
         -1, -2 -> println("n is a negative integer greater than 3.")
+    }
+}
+
+/**Kotlin gives you additional control over loops with the labeled break.
+ * A break qualified with a label annotation jumps to the execution point right after the
+ * loop marked with that label. This gives you better control over nested loops.
+ *
+ * The code below will print out:
+ *  i = 1, j = 1
+    i = 1, j = 2
+    i = 2, j = 1
+ *
+ * Here by using break with a label (break@first in this case), you can break the specific loop.
+ * So, when i == 2 expression is evaluated to true, break@first is executed which terminates
+ * the loop marked with label first@. */
+fun labeledBreakExample() {
+    first@ for (i in 1..4) {
+        for (j in 1..2) {
+            println("i = $i, j = $j")
+
+            if (i == 2)
+                break@first
+        }
     }
 }

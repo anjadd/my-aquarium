@@ -35,6 +35,20 @@ class Building<T : BaseBuildingMaterial>(val buildingMaterial: T) {
     }
 }
 
+
+/**Create a generic function for type BaseBuildingMaterial and call it isSmallBuilding,
+ * which takes a Building with a building material T as an argument. If the materials needed are
+ * less than 500, print "small building", otherwise, print "large building".
+ * Note: For this function, IntelliJ recommends not to inline the function.*/
+
+fun <T : BaseBuildingMaterial> isSmallBuilding(building: Building<T>) {
+    println(
+        "The building made with ${building.buildingMaterial::class.simpleName} is a " +
+                "${if (building.actualMaterialsNeeded < 500) "small" else "large"} building"
+    )
+}
+
+
 //Generic classes are classes which have type parameters:
 class Box<T>(boxType: T) {
     val boxValue = boxType
@@ -43,6 +57,8 @@ class Box<T>(boxType: T) {
 fun main() {
     val building1 = Building<Wood>(Wood())
     building1.build()
+
+    isSmallBuilding(Building(Brick()))
 
     //To create an instance of a generic class, you need to provide the type arguments:
     val box: Box<Int> = Box<Int>(1)

@@ -87,7 +87,7 @@ class FishStoreWater : WaterSupply(false)
 // any type in or or even pass a null
 //class Aquarium<T>(val waterSupply: T)     PROBLEM!
 
-class Aquarium<T : WaterSupply>(val waterSupply: T) {
+class Aquarium<out T : WaterSupply>(val waterSupply: T) {
 
     fun addWater() {
         if (!waterSupply.waterNeedsProcessing) {
@@ -98,7 +98,9 @@ class Aquarium<T : WaterSupply>(val waterSupply: T) {
     fun addWaterUsingCheck() {
         /**Check acts as an assertion that its argument is true, because if it isn’t it will
          * throw an exception.
-         * The error: Exception in thread "main" java.lang.IllegalStateException: Adding water from com.annjad.myaquarium.otherexamples.TapWater@511d50c0
+         * The error: Exception in thread "main" java.lang.IllegalStateException: Adding water
+         * from TapWater@511d50c0
+         *
          * The code below checks if the condition 'water is filtered' is true
          * (or waterNeedsProcessing is false) and if it's true, goes on to the next line of code
          * printing that water is added.
@@ -110,7 +112,58 @@ class Aquarium<T : WaterSupply>(val waterSupply: T) {
         println("Adding water from $waterSupply")
     }
 
+    fun addWaterFromCleaner(cleaner: Cleaner<T>) {
+        if (waterSupply.waterNeedsProcessing) {
+            cleaner.clean(waterSupply)
+        }
+    }
 
+    fun getWaterType(): T {
+        return waterSupply
+    }
+
+    /**Use reflection to get information about the class at runtime.
+     * The syntax is: ‘:: class’ operation.
+     * This lets Kotlin look into the class's properties or in other words reflect.*/
+    fun aquariumInfo() =
+        "The aquarium is of the following Water supply type: ${waterSupply::class.simpleName}"
+}
+
+/**Create an interface Cleaner that let's you clean different water supplies.
+ * Since you're only using the cleaner's generic type T as an argument to method clean(),
+ * you can make it an in type.*/
+interface Cleaner<in T : WaterSupply> {
+    fun clean(waterSupply: T)
+}
+
+/**In order to use the cleaner interface, create a class that implements Cleaner for cleaning
+ * tap water by adding chemicals. */
+class TapWaterCleaner : Cleaner<TapWater> {
+    override fun clean(waterSupply: TapWater) {
+        waterSupply.addChemicalCleaners()
+    }
+
+}
+
+/** Create a method isWaterClean that takes an aquarium.
+ * You can create a function that takes an Aquarium parameter, but this means that the class
+ * Aquarium must have an out type parameter, for this function to be called.*/
+fun isWaterClean1(aquarium: Aquarium<WaterSupply>) {
+    println(
+        if (aquarium.waterSupply.waterNeedsProcessing) "The water in the aquarium is NOT clean!"
+        else "The water in the aquarium IS clean."
+    )
+}
+
+/**Create a method isWaterClean with a generic argument T and T is constrained by WaterSupply.
+ * That means that T is a type parameter, to this 'isWaterClean()' function, which is used for
+ * specifying the generic type of the aquarium.
+ * */
+fun <T : WaterSupply> isWaterClean(aquarium: Aquarium<T>) {
+    println(
+        if (aquarium.waterSupply.waterNeedsProcessing) "The water in the aquarium is NOT clean!"
+        else "The water in the aquarium IS clean."
+    )
 }
 
 fun genericExample() {
@@ -131,6 +184,17 @@ fun genericExample() {
     aquarium2.waterSupply.filter()
     aquarium2.addWaterUsingCheck()
 
+    val cleaner = TapWaterCleaner()
+    val aquarium3 = Aquarium<TapWater>(TapWater())
+    aquarium3.addWaterFromCleaner(cleaner)
+
+    aquarium2.getWaterType()
+
+    val aquarium4 = Aquarium(LakeWater())
+    isWaterClean(aquarium4)
+    println(aquarium4.aquariumInfo())   //The aquarium is of the following Water supply type: LakeWater
+
+
     checkInternetConnection()
 
     /**You can even pass a String to Aquarium, or create an aquarium of type String.
@@ -144,6 +208,10 @@ fun genericExample() {
     //val aquarium3 = Aquarium(null)  PROBLEM!
 
     petShopGenericsExample()
+
+    makingBurgersGenericInOutExample()
+
+    genericFunctionsExample()
 }
 
 /**Type T by default stands for the ‘nullable Any’ type, which is the type
@@ -267,6 +335,9 @@ class Americans : Consumer<Burger> {
 
 fun makingBurgersGenericInOutExample() {
 
+    val cons1: Consumer<Food> = Everybody()
+    val cons2: Consumer<Burger> = Everybody()
+
     val store1: Production<Food> = FoodStore()
     val store2: Production<FastFood> = FastFoodStore()
     val store3: Production<Burger> = BurgerStore()
@@ -292,9 +363,22 @@ fun makingBurgersGenericInOutExample() {
 
     /**For 'in' generic, you could assign a class of super-type to class of subtype.
      * A burger consumer is an American, who is also part of ModernPeople, who is part of Everybody.
+     * Everybody eats food, meaning they eat burgers too, the same applies with Modern people.
      */
     val consumer4: Consumer<Burger> = Everybody()
     val consumer5: Consumer<Burger> = ModernPeople()
     val consumer6: Consumer<Burger> = Americans()
+}
+
+/**Create a generic function combineNumbersToString() with a generic type T which is a subtype
+ * of Number. It accepts 3 numbers and combines them into a String*/
+fun <T : Number> combineNumbersToString(num1: T, num2: T, num3: T): String {
+    return "$num1$num2$num3"
+}
+
+fun genericFunctionsExample() {
+    val someNumbers = arrayOf(4, 72, 3.8)
+    val combinedNumbers = combineNumbersToString(someNumbers[0], someNumbers[1], someNumbers[2])
+    println("The combination of the numbers ${someNumbers[0]}, ${someNumbers[1]} and ${someNumbers[2]} is $combinedNumbers")
 }
 
