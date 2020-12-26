@@ -28,4 +28,8 @@ fun main() {
     fish2.printFishInfo()
 
     makeDefaultFish()
+
+    lateinit var fish: Fish    // Initialized later in code
+    lateinit var names: List<String>    // Initialized later in code
+
 }

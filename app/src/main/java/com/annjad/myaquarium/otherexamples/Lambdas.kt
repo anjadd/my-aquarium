@@ -59,6 +59,42 @@ fun gamePlay(rollingDice: Int) {
 }
 
 
+data class Fruit(val name: String)
+
+fun printFruitsThatHaveEInNames() {
+    val allFruits = listOf(
+        Fruit("apple"), Fruit("banana"), Fruit("kiwi"),
+        Fruit("cherry"), Fruit("apricot"), Fruit("orange")
+    )
+    println("Fruits with E in their names are:")
+
+    //Solution 1:
+    allFruits.filter { it.name.contains("e") }.forEach { println(it.name) }
+
+    //Solution 2:
+    /**The joinToString() function is used to convert an array or a list to a string which is
+     * separated with the mentioned separator.*/
+    val fruitsWithEinCommaSeparatedString =
+        allFruits.filter { it.name.contains("e") }.joinToString(", ") { it.name }
+    println(fruitsWithEinCommaSeparatedString)
+}
+
+fun printAllFruitsThatHaveEInNames() {
+    val allFruits = listOf("apple", "banana", "kiwi", "cherry", "apricot", "orange")
+
+    println("Fruits with E in their names are:")
+
+    allFruits.filter { it.contains("e") }.forEach { println(it) }
+}
+
+fun sumUpTwoNumbers() {
+    val sum = { x: Int, y: Int
+        ->
+        x + y
+    }
+    println("The sum of 5 + 10 = ${sum(5, 10)}")
+}
+
 fun main() {
 
     /**A lambda is always surrounded by curly brackets.
@@ -127,5 +163,10 @@ fun main() {
     rollTheDice()
 
     gamePlay(rollDice(10))
+
+    printFruitsThatHaveEInNames()
+
+    printAllFruitsThatHaveEInNames()
+
 
 }
